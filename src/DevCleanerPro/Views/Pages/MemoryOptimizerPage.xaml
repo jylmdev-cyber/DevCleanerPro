@@ -1,0 +1,40 @@
+<Page x:Class="DevCleanerPro.Views.Pages.MemoryOptimizerPage" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml" Title="Memoria">
+    <Grid Margin="36,24">
+        <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+        <StackPanel Grid.Row="0"><TextBlock Text="Optimizador de Memoria" Style="{StaticResource PageTitleStyle}"/><TextBlock Text="EmptyWorkingSet + Purge Standby List para liberar RAM" Style="{StaticResource PageSubtitleStyle}"/></StackPanel>
+        <UniformGrid Grid.Row="1" Columns="3" Margin="0,0,0,16">
+            <Border Style="{StaticResource StatCardStyle}">
+                <Grid>
+                    <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                    <StackPanel><TextBlock Text="RAM Antes" Style="{StaticResource StatLabelStyle}"/><TextBlock x:Name="TxtBefore" Text="—" Style="{StaticResource StatValueStyle}"/></StackPanel>
+                    <Border Grid.Column="1" Width="40" Height="40" CornerRadius="20" Background="{DynamicResource DevAccentOrangeDim}">
+                        <ui:SymbolIcon Symbol="Memory16" Foreground="{DynamicResource DevAccentOrange}" FontSize="20"/>
+                    </Border>
+                </Grid>
+            </Border>
+            <Border Style="{StaticResource StatCardStyle}">
+                <Grid>
+                    <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                    <StackPanel><TextBlock Text="RAM Después" Style="{StaticResource StatLabelStyle}"/><TextBlock x:Name="TxtAfter" Text="—" Style="{StaticResource StatValueStyle}"/></StackPanel>
+                    <Border Grid.Column="1" Width="40" Height="40" CornerRadius="20" Background="{DynamicResource DevAccentBlueDim}">
+                        <ui:SymbolIcon Symbol="Memory16" Foreground="{DynamicResource DevAccentBlue}" FontSize="20"/>
+                    </Border>
+                </Grid>
+            </Border>
+            <Border Style="{StaticResource StatCardStyle}">
+                <Grid>
+                    <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                    <StackPanel><TextBlock Text="Liberado" Style="{StaticResource StatLabelStyle}"/><TextBlock x:Name="TxtFreed" Text="—" Style="{StaticResource StatValueStyle}" Foreground="{DynamicResource DevAccentGreen}"/></StackPanel>
+                    <Border Grid.Column="1" Width="40" Height="40" CornerRadius="20" Background="{DynamicResource DevAccentGreenDim}">
+                        <ui:SymbolIcon Symbol="ArrowCircleDown24" Foreground="{DynamicResource DevAccentGreen}" FontSize="20"/>
+                    </Border>
+                </Grid>
+            </Border>
+        </UniformGrid>
+        <Border Grid.Row="2" Style="{StaticResource StatCardStyle}"><StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+            <ui:SymbolIcon Symbol="Memory16" FontSize="64" Margin="0,0,0,24"/><ui:Button x:Name="BtnOptimize" Content="Optimizar Memoria" Icon="{ui:SymbolIcon Play24}" Appearance="Primary" Click="BtnOptimize_Click" HorizontalAlignment="Center" FontSize="16" Padding="32,12"/>
+        </StackPanel></Border>
+        <Grid Grid.Row="3" Margin="0,8,0,0"><Grid.ColumnDefinitions><ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+            <ui:ProgressRing x:Name="Ring" IsIndeterminate="True" Width="18" Height="18" Visibility="Collapsed" Margin="0,0,8,0"/><TextBlock x:Name="TxtStatus" Grid.Column="1" Text="Listo" Foreground="{DynamicResource DevTextMuted}" FontSize="12" VerticalAlignment="Center"/></Grid>
+    </Grid>
+</Page>
