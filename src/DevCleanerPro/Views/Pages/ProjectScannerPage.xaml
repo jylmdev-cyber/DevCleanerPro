@@ -1,0 +1,117 @@
+<Page x:Class="DevCleanerPro.Views.Pages.ProjectScannerPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+      Title="Proyectos">
+    <Grid Margin="36,24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <StackPanel Grid.Row="0">
+            <TextBlock Text="Escáner de Proyectos" Style="{StaticResource PageTitleStyle}"/>
+            <TextBlock Text="Detecta bin, obj, node_modules, target, __pycache__ y más" Style="{StaticResource PageSubtitleStyle}"/>
+        </StackPanel>
+
+        <!-- Path selector -->
+        <Grid Grid.Row="1" Margin="0,0,0,16">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <ui:TextBox x:Name="TxtPath" Grid.Column="0" PlaceholderText="Seleccione la carpeta raíz de proyectos..." Margin="0,0,8,0"/>
+            <ui:Button Grid.Column="1" Content="Examinar" Icon="{ui:SymbolIcon Folder24}" Click="BtnBrowse_Click" Margin="0,0,8,0"/>
+            <ui:Button x:Name="BtnScan" Grid.Column="2" Content="Escanear" Icon="{ui:SymbolIcon Search24}" Appearance="Primary" Click="BtnScan_Click"/>
+        </Grid>
+
+        <!-- Stats -->
+        <UniformGrid Grid.Row="2" Columns="3" Margin="0,0,0,8">
+            <Border Style="{StaticResource StatCardStyle}">
+                <Grid>
+                    <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                    <StackPanel>
+                        <TextBlock x:Name="TxtProjectCount" Text="0" Style="{StaticResource StatValueStyle}"/>
+                        <TextBlock Text="Proyectos encontrados" Style="{StaticResource StatLabelStyle}"/>
+                    </StackPanel>
+                    <Border Grid.Column="1" Width="40" Height="40" CornerRadius="20" Background="{DynamicResource DevAccentBlueDim}">
+                        <ui:SymbolIcon Symbol="Folder24" Foreground="{DynamicResource DevAccentBlue}" FontSize="20"/>
+                    </Border>
+                </Grid>
+            </Border>
+            <Border Style="{StaticResource StatCardStyle}">
+                <Grid>
+                    <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                    <StackPanel>
+                        <TextBlock x:Name="TxtCleanableSize" Text="0 B" Style="{StaticResource StatValueStyle}"/>
+                        <TextBlock Text="Espacio recuperable" Style="{StaticResource StatLabelStyle}"/>
+                    </StackPanel>
+                    <Border Grid.Column="1" Width="40" Height="40" CornerRadius="20" Background="{DynamicResource DevAccentGreenDim}">
+                        <ui:SymbolIcon Symbol="Delete24" Foreground="{DynamicResource DevAccentGreen}" FontSize="20"/>
+                    </Border>
+                </Grid>
+            </Border>
+            <Border Style="{StaticResource StatCardStyle}">
+                <StackPanel HorizontalAlignment="Center">
+                    <ui:Button x:Name="BtnClean" Content="Limpiar seleccionados" Icon="{ui:SymbolIcon Delete24}" Appearance="Caution" Click="BtnClean_Click" IsEnabled="False" HorizontalAlignment="Center" Margin="0,4,0,0"/>
+                </StackPanel>
+            </Border>
+        </UniformGrid>
+
+        <Grid Grid.Row="3" Margin="0,4,0,0">
+            <!-- Empty State -->
+            <Border x:Name="PanelEmptyState" Style="{StaticResource StatCardStyle}" VerticalAlignment="Center" HorizontalAlignment="Center" Padding="48,32">
+                <StackPanel HorizontalAlignment="Center">
+                    <ui:SymbolIcon Symbol="FolderSearch24" FontSize="48" Margin="0,0,0,16" HorizontalAlignment="Center" Foreground="{DynamicResource DevAccentBlue}"/>
+                    <TextBlock Text="Listo para escanear" FontSize="20" FontWeight="SemiBold" HorizontalAlignment="Center"/>
+                    <TextBlock Text="Seleccione una ruta y pulse Escanear" Opacity="0.6" HorizontalAlignment="Center" Margin="0,8,0,0"/>
+                </StackPanel>
+            </Border>
+
+            <!-- Results -->
+            <DataGrid x:Name="ResultsGrid"
+                      Visibility="Collapsed"
+                      AutoGenerateColumns="False"
+                      IsReadOnly="False"
+                      CanUserAddRows="False"
+                      CanUserDeleteRows="False"
+                      HeadersVisibility="Column"
+                      GridLinesVisibility="Horizontal"
+                      SelectionMode="Single">
+                <DataGrid.Columns>
+                <DataGridCheckBoxColumn Header="✓" Binding="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged}" Width="40"/>
+                <DataGridTextColumn Header="Tipo" Binding="{Binding TypeName}" Width="100" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Proyecto" Binding="{Binding Name}" Width="200" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Ruta" Binding="{Binding Path}" Width="*" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Limpiable" Binding="{Binding CleanableSize, Converter={StaticResource FileSizeConverter}}" Width="120" IsReadOnly="True">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Foreground" Value="{Binding CleanableSize, Converter={StaticResource FileSizeColorConverter}}"/>
+                            <Setter Property="FontWeight" Value="SemiBold"/>
+                            <Setter Property="Padding" Value="12,6"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Carpetas" Binding="{Binding CleanableFolders.Count}" Width="80" IsReadOnly="True"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        </Grid>
+
+        <!-- Status -->
+        <Grid Grid.Row="4" Margin="0,8,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <ui:ProgressRing x:Name="LoadingRing" Grid.Column="0" IsIndeterminate="True" Width="18" Height="18" Visibility="Collapsed" Margin="0,0,8,0"/>
+            <TextBlock x:Name="TxtStatus" Grid.Column="1" Text="Seleccione una carpeta para escanear" VerticalAlignment="Center" Foreground="{DynamicResource DevTextMuted}" FontSize="12"/>
+            <ui:Button x:Name="BtnCancel" Grid.Column="2" Content="Cancelar" Icon="{ui:SymbolIcon Dismiss24}" Click="BtnCancel_Click" Visibility="Collapsed"/>
+        </Grid>
+    </Grid>
+</Page>
