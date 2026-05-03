@@ -1,0 +1,97 @@
+<Page x:Class="DevCleanerPro.Views.Pages.EnvironmentToolsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+      Title="Herramientas">
+    <Grid Margin="36,24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0">
+            <TextBlock Text="Herramientas del Entorno" Style="{StaticResource PageTitleStyle}"/>
+            <TextBlock Text="Análisis de PATH, programas de inicio, y búsqueda de archivos grandes" Style="{StaticResource PageSubtitleStyle}"/>
+        </StackPanel>
+
+        <TabControl Grid.Row="1">
+            <!-- PATH Analysis Tab -->
+            <TabItem Header="🔍 Análisis de PATH">
+                <Grid Margin="16">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,12">
+                        <ui:Button Content="Analizar PATH" Icon="{ui:SymbolIcon Search24}" Appearance="Primary" Click="BtnAnalyzePath_Click" Margin="0,0,12,0"/>
+                        <TextBlock x:Name="TxtPathStatus" VerticalAlignment="Center" Foreground="{DynamicResource DevTextMuted}"/>
+                    </StackPanel>
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="300"/>
+                        </Grid.ColumnDefinitions>
+                        <DataGrid x:Name="PathGrid" Grid.Column="0" AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False" HeadersVisibility="Column" Margin="0,0,12,0">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Entrada PATH" Binding="{Binding Name}" Width="*"/>
+                                <DataGridTextColumn Header="Estado" Binding="{Binding Value}" Width="100"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <StackPanel Grid.Column="1">
+                            <TextBlock Text="⚠️ Duplicados" FontWeight="SemiBold" Margin="0,0,0,8"/>
+                            <ListBox x:Name="DuplicatesList" Height="150" DisplayMemberPath="Name"/>
+                            <TextBlock Text="❌ Inválidos" FontWeight="SemiBold" Margin="0,16,0,8"/>
+                            <ListBox x:Name="InvalidsList" Height="150" DisplayMemberPath="Name"/>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+            </TabItem>
+
+            <!-- Startup Programs Tab -->
+            <TabItem Header="🚀 Programas de inicio">
+                <Grid Margin="16">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,12">
+                        <ui:Button Content="Cargar" Icon="{ui:SymbolIcon Search24}" Appearance="Primary" Click="BtnLoadStartup_Click" Margin="0,0,12,0"/>
+                        <TextBlock x:Name="TxtStartupStatus" VerticalAlignment="Center" Foreground="{DynamicResource DevTextMuted}"/>
+                    </StackPanel>
+                    <DataGrid x:Name="StartupGrid" Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False" HeadersVisibility="Column">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Nombre" Binding="{Binding Name}" Width="200"/>
+                            <DataGridTextColumn Header="Comando" Binding="{Binding Command}" Width="*"/>
+                            <DataGridTextColumn Header="Origen" Binding="{Binding Source}" Width="80"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+
+            <!-- Large Files Tab -->
+            <TabItem Header="📦 Archivos grandes">
+                <Grid Margin="16">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,12">
+                        <ui:Button x:Name="BtnScanLarge" Content="Escanear (>100 MB)" Icon="{ui:SymbolIcon Search24}" Appearance="Primary" Click="BtnScanLargeFiles_Click" Margin="0,0,12,0"/>
+                        <ui:ProgressRing x:Name="LargeFilesRing" IsIndeterminate="True" Width="18" Height="18" Visibility="Collapsed" Margin="0,0,8,0"/>
+                        <TextBlock x:Name="TxtLargeStatus" VerticalAlignment="Center" Foreground="{DynamicResource DevTextMuted}"/>
+                    </StackPanel>
+                    <DataGrid x:Name="LargeFilesGrid" Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False" HeadersVisibility="Column">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Archivo" Binding="{Binding Path}" Width="*"/>
+                            <DataGridTextColumn Header="Tamaño" Binding="{Binding SizeText}" Width="120"/>
+                            <DataGridTextColumn Header="Modificado" Binding="{Binding LastModified, StringFormat=dd/MM/yyyy}" Width="120"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+        </TabControl>
+
+        <TextBlock x:Name="TxtStatus" Grid.Row="2" Text="" Foreground="{DynamicResource DevTextMuted}" FontSize="12" Margin="0,8,0,0"/>
+    </Grid>
+</Page>
