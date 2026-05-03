@@ -1,0 +1,24 @@
+<Page x:Class="DevCleanerPro.Views.Pages.RegistryCleanerPage" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml" Title="Registro">
+    <Grid Margin="36,24"><Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+        <StackPanel Grid.Row="0"><TextBlock Text="Registro (Modo Seguro)" Style="{StaticResource PageTitleStyle}"/><TextBlock Text="MUICache, UserAssist, y Run keys huérfanos — solo HKCU" Style="{StaticResource PageSubtitleStyle}"/></StackPanel>
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,0,0,12"><ui:Button Content="Escanear" Icon="{ui:SymbolIcon Search24}" Appearance="Primary" Click="BtnScan_Click" Margin="0,0,8,0"/><ui:Button x:Name="BtnClean" Content="Limpiar huérfanos" Icon="{ui:SymbolIcon Delete24}" Appearance="Caution" Click="BtnClean_Click" IsEnabled="False"/></StackPanel>
+        <Grid Grid.Row="2">
+            <Border x:Name="PanelEmptyState" Style="{StaticResource StatCardStyle}" VerticalAlignment="Center" HorizontalAlignment="Center" Padding="48,32">
+                <StackPanel HorizontalAlignment="Center">
+                    <ui:SymbolIcon Symbol="ShieldCheckmark24" FontSize="48" Margin="0,0,0,16" HorizontalAlignment="Center" Foreground="{DynamicResource DevAccentGreen}"/>
+                    <TextBlock Text="Registro limpio" FontSize="20" FontWeight="SemiBold" HorizontalAlignment="Center"/>
+                    <TextBlock Text="Pulse Escanear para analizar el registro" Opacity="0.6" HorizontalAlignment="Center" Margin="0,8,0,0"/>
+                </StackPanel>
+            </Border>
+            <DataGrid x:Name="Grid" Visibility="Collapsed" AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False" HeadersVisibility="Column">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Categoría" Binding="{Binding Category}" Width="150"/>
+                    <DataGridTextColumn Header="Valor" Binding="{Binding ValueName}" Width="250"/>
+                    <DataGridTextColumn Header="Dato" Binding="{Binding Value}" Width="*"/>
+                    <DataGridCheckBoxColumn Header="Huérfano" Binding="{Binding IsOrphan}" Width="80"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+        <Grid Grid.Row="3" Margin="0,8,0,0"><Grid.ColumnDefinitions><ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions><ui:ProgressRing x:Name="Ring" IsIndeterminate="True" Width="18" Height="18" Visibility="Collapsed" Margin="0,0,8,0"/><TextBlock x:Name="TxtStatus" Grid.Column="1" Foreground="{DynamicResource DevTextMuted}" FontSize="12" VerticalAlignment="Center"/></Grid>
+    </Grid>
+</Page>
