@@ -1,0 +1,232 @@
+<ui:FluentWindow x:Class="DevCleanerPro.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+        xmlns:pages="clr-namespace:DevCleanerPro.Views.Pages"
+        Title="DevCleaner Pro v2.0"
+        Width="1360" Height="860"
+        MinWidth="1024" MinHeight="680"
+        WindowStartupLocation="CenterScreen"
+        ExtendsContentIntoTitleBar="True"
+        WindowBackdropType="Mica"
+        Icon="pack://application:,,,/Assets/app-icon.ico">
+
+    <Grid Background="{DynamicResource DevBgPrimary}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>  <!-- TitleBar -->
+            <RowDefinition Height="Auto"/>  <!-- TopBar Metrics -->
+            <RowDefinition Height="Auto"/>  <!-- Global Progress -->
+            <RowDefinition Height="*"/>     <!-- Nav + Content -->
+            <RowDefinition Height="Auto"/>  <!-- Output Panel -->
+            <RowDefinition Height="Auto"/>  <!-- Status Bar -->
+        </Grid.RowDefinitions>
+
+        <!-- ═══ TITLE BAR ═══ -->
+        <ui:TitleBar Grid.Row="0" Title="DevCleaner Pro" ShowMaximize="True" ShowMinimize="True" CanMaximize="True"/>
+
+        <!-- ═══ TOP BAR — Metrics + Quick Actions ═══ -->
+        <Border Grid.Row="1" Background="{DynamicResource DevBgElevated}" BorderBrush="{DynamicResource DevBorder}" BorderThickness="0,0,0,1" Padding="16,7">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>  <!-- Logo -->
+                    <ColumnDefinition Width="*"/>     <!-- Spacer -->
+                    <ColumnDefinition Width="Auto"/>  <!-- Metrics -->
+                    <ColumnDefinition Width="Auto"/>  <!-- Admin Badge -->
+                    <ColumnDefinition Width="Auto"/>  <!-- Quick Clean -->
+                </Grid.ColumnDefinitions>
+
+                <!-- Logo + Title -->
+                <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
+                    <Border Background="{DynamicResource DevAccentBlueDim}" CornerRadius="6" Padding="5" Margin="0,0,10,0">
+                        <ui:SymbolIcon Symbol="Broom24" FontSize="16" Foreground="{DynamicResource DevAccentBlue}"/>
+                    </Border>
+                    <TextBlock Text="{DynamicResource Str_AppTitle}" FontSize="15" FontWeight="SemiBold" Foreground="{DynamicResource DevTextPrimary}" VerticalAlignment="Center"/>
+                    <Border Background="{DynamicResource DevAccentPurpleDim}" CornerRadius="4" Padding="6,1" Margin="8,0,0,0" VerticalAlignment="Center">
+                        <TextBlock Text="v2.0" FontSize="10" Foreground="{DynamicResource DevAccentPurple}" FontWeight="SemiBold"/>
+                    </Border>
+                </StackPanel>
+
+                <!-- Real-time Metrics -->
+                <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
+                    <!-- CPU -->
+                    <Border Style="{StaticResource MetricPillStyle}">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="CPU" Style="{StaticResource MetricLabelStyle}"/>
+                            <TextBlock x:Name="TxtCpu" Text="—%" Style="{StaticResource MetricValueStyle}"/>
+                        </StackPanel>
+                    </Border>
+                    <!-- RAM -->
+                    <Border Style="{StaticResource MetricPillStyle}">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="RAM" Style="{StaticResource MetricLabelStyle}"/>
+                            <TextBlock x:Name="TxtRam" Text="— GB" Style="{StaticResource MetricValueStyle}"/>
+                        </StackPanel>
+                    </Border>
+                    <!-- Disk -->
+                    <Border Style="{StaticResource MetricPillStyle}">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="C:" Style="{StaticResource MetricLabelStyle}"/>
+                            <TextBlock x:Name="TxtDisk" Text="—%" Style="{StaticResource MetricValueStyle}"/>
+                        </StackPanel>
+                    </Border>
+                    <!-- Uptime -->
+                    <Border Style="{StaticResource MetricPillStyle}">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="↑" Style="{StaticResource MetricLabelStyle}" Foreground="{DynamicResource DevAccentCyan}" FontSize="12" Margin="0,0,4,0"/>
+                            <TextBlock x:Name="TxtUptime" Text="—" Style="{StaticResource MetricValueStyle}" Foreground="{DynamicResource DevAccentCyan}"/>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+
+                <!-- Admin Badge -->
+                <Border x:Name="AdminBadge" Grid.Column="3" Style="{StaticResource BadgeStyle}" Background="{DynamicResource DevAccentGreenDim}">
+                    <StackPanel Orientation="Horizontal">
+                        <ui:SymbolIcon Symbol="Shield24" FontSize="12" Foreground="{DynamicResource DevAccentGreen}" Margin="0,0,4,0"/>
+                        <TextBlock x:Name="TxtAdmin" Text="ADMIN" Style="{StaticResource BadgeTextStyle}" Foreground="{DynamicResource DevAccentGreen}"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Quick Clean Button -->
+                <ui:Button Grid.Column="4" Content="⚡ Quick Clean" Appearance="Primary" Margin="8,0,0,0" Padding="16,4" FontSize="12" Click="BtnQuickClean_Click"/>
+            </Grid>
+        </Border>
+
+        <!-- ═══ GLOBAL PROGRESS BAR ═══ -->
+        <ProgressBar x:Name="GlobalProgress" Grid.Row="2" Height="3" Minimum="0" Maximum="100" Value="0" Visibility="Collapsed"
+                     Foreground="{DynamicResource DevAccentBlue}" Background="{DynamicResource DevBgElevated}" BorderThickness="0"/>
+
+        <!-- ═══ NAVIGATION + CONTENT ═══ -->
+        <ui:NavigationView x:Name="NavigationView" Grid.Row="3" PaneDisplayMode="Left" IsBackButtonVisible="Collapsed" IsPaneToggleVisible="True" OpenPaneLength="250" Loaded="NavigationView_Loaded">
+
+            <ui:NavigationView.MenuItems>
+                <ui:NavigationViewItem Content="{DynamicResource Str_Nav_Dashboard}" TargetPageType="{x:Type pages:DashboardPage}" Icon="{ui:SymbolIcon Home24}"/>
+                <ui:NavigationViewItem Content="⚡ Quick Clean" TargetPageType="{x:Type pages:QuickCleanPage}" Icon="{ui:SymbolIcon Flash24}"/>
+
+                <ui:NavigationViewItemSeparator/>
+
+                <ui:NavigationViewItem Content="{DynamicResource Str_Nav_Section_Cleanup}" Icon="{ui:SymbolIcon Broom24}">
+                    <ui:NavigationViewItem.InfoBadge>
+                        <ui:InfoBadge Value="6" Severity="Informational"/>
+                    </ui:NavigationViewItem.InfoBadge>
+                    <ui:NavigationViewItem.MenuItems>
+                        <ui:NavigationViewItem Content="{DynamicResource Str_Nav_TempFiles}" TargetPageType="{x:Type pages:TempFilesPage}" Icon="{ui:SymbolIcon Delete24}"/>
+                        <ui:NavigationViewItem Content="Cachés de Paquetes" TargetPageType="{x:Type pages:CacheCleanerPage}" Icon="{ui:SymbolIcon Database24}"/>
+                        <ui:NavigationViewItem Content="{DynamicResource Str_Nav_Projects}" TargetPageType="{x:Type pages:ProjectScannerPage}" Icon="{ui:SymbolIcon FolderSearch24}"/>
+                        <ui:NavigationViewItem Content="{DynamicResource Str_Nav_Docker}" TargetPageType="{x:Type pages:DockerCleanupPage}" Icon="{ui:SymbolIcon Cloud24}"/>
+                        <ui:NavigationViewItem Content="{DynamicResource Str_Nav_VisualStudio}" TargetPageType="{x:Type pages:VsCleanerPage}" Icon="{ui:SymbolIcon Code24}"/>
+                        <ui:NavigationViewItem Content="{DynamicResource Str_Nav_AiAgents}" TargetPageType="{x:Type pages:AiAgentCleanerPage}" Icon="{ui:SymbolIcon Bot24}"/>
+                    </ui:NavigationViewItem.MenuItems>
+                </ui:NavigationViewItem>
+
+                <ui:NavigationViewItem Content="{DynamicResource Str_Nav_Section_Optimization}" Icon="{ui:SymbolIcon Desktop24}">
+                    <ui:NavigationViewItem.InfoBadge>
+                        <ui:InfoBadge Value="4" Severity="Informational"/>
+                    </ui:NavigationViewItem.InfoBadge>
+                    <ui:NavigationViewItem.MenuItems>
+                        <ui:NavigationViewItem Content="{DynamicResource Str_Nav_Memory}" TargetPageType="{x:Type pages:MemoryOptimizerPage}" Icon="{ui:SymbolIcon BrainCircuit24}"/>
+                        <ui:NavigationViewItem Content="{DynamicResource Str_Nav_EventLogs}" TargetPageType="{x:Type pages:EventLogCleanerPage}" Icon="{ui:SymbolIcon Document24}"/>
+                        <ui:NavigationViewItem Content="DNS Flush" TargetPageType="{x:Type pages:DnsFlushPage}" Icon="{ui:SymbolIcon Globe24}"/>
+                        <ui:NavigationViewItem Content="Portapapeles" TargetPageType="{x:Type pages:ClipboardPage}" Icon="{ui:SymbolIcon Clipboard24}"/>
+                    </ui:NavigationViewItem.MenuItems>
+                </ui:NavigationViewItem>
+
+                <ui:NavigationViewItemSeparator/>
+
+                <ui:NavigationViewItem Content="{DynamicResource Str_Nav_Section_Analysis}" Icon="{ui:SymbolIcon DataUsage24}">
+                    <ui:NavigationViewItem.InfoBadge>
+                        <ui:InfoBadge Value="6" Severity="Informational"/>
+                    </ui:NavigationViewItem.InfoBadge>
+                    <ui:NavigationViewItem.MenuItems>
+                        <ui:NavigationViewItem Content="{DynamicResource Str_Nav_DiskAnalyzer}" TargetPageType="{x:Type pages:DiskAnalyzerPage}" Icon="{ui:SymbolIcon HardDrive24}"/>
+                        <ui:NavigationViewItem Content="{DynamicResource Str_Nav_Processes}" TargetPageType="{x:Type pages:ProcessMonitorPage}" Icon="{ui:SymbolIcon Apps24}"/>
+                        <ui:NavigationViewItem Content="Programas de Inicio" TargetPageType="{x:Type pages:StartupManagerPage}" Icon="{ui:SymbolIcon Rocket24}" ToolTip="Administrar programas de arranque"/>
+                        <ui:NavigationViewItem Content="Firewall" TargetPageType="{x:Type pages:FirewallAuditPage}" Icon="{ui:SymbolIcon Shield24}" ToolTip="Auditoría de reglas de firewall"/>
+                        <ui:NavigationViewItem Content="Registro" TargetPageType="{x:Type pages:RegistryCleanerPage}" Icon="{ui:SymbolIcon SlideText24}" ToolTip="Detectar claves huérfanas"/>
+                <ui:NavigationViewItem Content="Shadow Copies" TargetPageType="{x:Type pages:ShadowCopyPage}" Icon="{ui:SymbolIcon History24}"/>
+                    </ui:NavigationViewItem.MenuItems>
+                </ui:NavigationViewItem>
+
+                <ui:NavigationViewItem Content="Herramientas" Icon="{ui:SymbolIcon Wrench24}">
+                    <ui:NavigationViewItem.InfoBadge>
+                        <ui:InfoBadge Value="3" Severity="Informational"/>
+                    </ui:NavigationViewItem.InfoBadge>
+                    <ui:NavigationViewItem.MenuItems>
+                        <ui:NavigationViewItem Content="{DynamicResource Str_Nav_SfcDism}" TargetPageType="{x:Type pages:SfcDismPage}" Icon="{ui:SymbolIcon FixedWidth24}"/>
+                        <ui:NavigationViewItem Content="Tareas Programadas" TargetPageType="{x:Type pages:ScheduledCleanPage}" Icon="{ui:SymbolIcon Calendar24}"/>
+                        <ui:NavigationViewItem Content="Historial" TargetPageType="{x:Type pages:AuditLogPage}" Icon="{ui:SymbolIcon Clock24}"/>
+                    </ui:NavigationViewItem.MenuItems>
+                </ui:NavigationViewItem>
+            </ui:NavigationView.MenuItems>
+
+            <ui:NavigationView.FooterMenuItems>
+                <ui:NavigationViewItem Content="{DynamicResource Str_Nav_Settings}" TargetPageType="{x:Type pages:SettingsPage}" Icon="{ui:SymbolIcon Settings24}"/>
+            </ui:NavigationView.FooterMenuItems>
+        </ui:NavigationView>
+
+        <!-- ═══ OUTPUT PANEL (colapsable) ═══ -->
+        <Border x:Name="OutputPanel" Grid.Row="4" Style="{StaticResource OutputPanelStyle}" Height="140" Visibility="Collapsed">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <!-- Output Header -->
+                <Border Grid.Row="0" Background="{DynamicResource DevBgElevated}" Padding="12,4">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/><ColumnDefinition Width="Auto"/><ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="OUTPUT" FontSize="10" FontWeight="Bold" Foreground="{DynamicResource DevTextMuted}" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                        <TextBlock x:Name="TxtOutputCount" Grid.Column="1" Text="" FontSize="10" Foreground="{DynamicResource DevTextMuted}" VerticalAlignment="Center"/>
+                        <ui:Button Grid.Column="2" Content="Copiar" Appearance="Secondary" FontSize="10" Padding="8,2" Margin="4,0" Click="BtnCopyOutput_Click"/>
+                        <ui:Button Grid.Column="3" Content="Limpiar" Appearance="Secondary" FontSize="10" Padding="8,2" Margin="4,0" Click="BtnClearOutput_Click"/>
+                        <ui:Button Grid.Column="4" Content="✕" Appearance="Secondary" FontSize="10" Padding="6,2" Click="BtnToggleOutput_Click"/>
+                    </Grid>
+                </Border>
+                <!-- Output Content -->
+                <ListBox x:Name="OutputList" Grid.Row="1" Background="Transparent" BorderThickness="0"
+                         ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock FontFamily="Cascadia Code, Consolas, monospace" FontSize="12" TextWrapping="NoWrap">
+                                <Run Text="{Binding Timestamp, Mode=OneWay}" Foreground="#484f58"/>
+                                <Run Text=" "/>
+                                <Run Text="{Binding LevelTag, Mode=OneWay}" Foreground="{Binding LevelBrush, Mode=OneWay}" FontWeight="Bold"/>
+                                <Run Text=" "/>
+                                <Run Text="{Binding Message, Mode=OneWay}" Foreground="#8b949e"/>
+                            </TextBlock>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem">
+                            <Setter Property="Padding" Value="12,1"/>
+                            <Setter Property="BorderThickness" Value="0"/>
+                            <Setter Property="Background" Value="Transparent"/>
+                            <Setter Property="Focusable" Value="False"/>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                </ListBox>
+            </Grid>
+        </Border>
+
+        <!-- ═══ STATUS BAR ═══ -->
+        <Border Grid.Row="5" Style="{StaticResource StatusBarStyle}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <!-- Output toggle -->
+                <ui:Button Grid.Column="0" Content="📋 Output" Appearance="Secondary" FontSize="10" Padding="8,2" Margin="0,0,12,0" Click="BtnToggleOutput_Click"/>
+                <TextBlock x:Name="StatusText" Grid.Column="1" Text="Listo — 21 módulos disponibles" FontSize="11" VerticalAlignment="Center" Foreground="{DynamicResource DevTextMuted}"/>
+                <TextBlock x:Name="LastScanText" Grid.Column="2" Text="" FontSize="11" Margin="16,0" VerticalAlignment="Center" Foreground="{DynamicResource DevTextMuted}"/>
+                <TextBlock x:Name="TxtUptimeStatus" Grid.Column="3" Text="" FontSize="11" Margin="8,0" VerticalAlignment="Center" Foreground="{DynamicResource DevTextMuted}"/>
+                <TextBlock Grid.Column="4" Text="v2.0.0" FontSize="11" VerticalAlignment="Center" Foreground="{DynamicResource DevTextMuted}"/>
+            </Grid>
+        </Border>
+    </Grid>
+</ui:FluentWindow>

@@ -1,0 +1,208 @@
+<Application x:Class="DevCleanerPro.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+             xmlns:conv="clr-namespace:DevCleanerPro.Converters"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ui:ThemesDictionary Theme="Dark" />
+                <ui:ControlsDictionary />
+            </ResourceDictionary.MergedDictionaries>
+
+            <!-- ═══ GLOBAL CONVERTERS ═══ -->
+            <conv:FileSizeConverter x:Key="FileSizeConverter"/>
+            <conv:FileSizeColorConverter x:Key="FileSizeColorConverter"/>
+            <conv:BoolToVisibilityConverter x:Key="BoolToVisibility"/>
+            <conv:InverseBoolToVisibilityConverter x:Key="InverseBoolToVisibility"/>
+
+            <!-- ══════════════════════════════════════════════════════ -->
+            <!-- PREMIUM DARK THEME & LIGHT THEME                     -->
+            <!-- Los colores se inyectan dinámicamente vía ThemeManagerHelper -->
+            <!-- ══════════════════════════════════════════════════════ -->
+
+            <!-- ═══ PAGE TYPOGRAPHY ═══ -->
+
+            <Style x:Key="PageTitleStyle" TargetType="TextBlock">
+                <Setter Property="FontSize" Value="26"/>
+                <Setter Property="FontWeight" Value="SemiBold"/>
+                <Setter Property="Foreground" Value="{DynamicResource DevTextPrimary}"/>
+                <Setter Property="Margin" Value="0,0,0,4"/>
+            </Style>
+
+            <Style x:Key="PageSubtitleStyle" TargetType="TextBlock">
+                <Setter Property="FontSize" Value="13"/>
+                <Setter Property="Foreground" Value="{DynamicResource DevTextMuted}"/>
+                <Setter Property="Margin" Value="0,0,0,20"/>
+            </Style>
+
+            <Style x:Key="SectionHeaderStyle" TargetType="TextBlock">
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="FontWeight" Value="SemiBold"/>
+                <Setter Property="Foreground" Value="{DynamicResource DevTextMuted}"/>
+                <Setter Property="Margin" Value="0,20,0,10"/>
+            </Style>
+
+            <!-- ═══ STAT CARDS (premium glassmorphism feel) ═══ -->
+
+            <Style x:Key="StatCardStyle" TargetType="Border">
+                <Setter Property="Background" Value="{DynamicResource DevGradientSurface}"/>
+                <Setter Property="BorderBrush" Value="{DynamicResource DevBorder}"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="CornerRadius" Value="10"/>
+                <Setter Property="Padding" Value="20,16"/>
+                <Setter Property="Margin" Value="0,0,0,10"/>
+                <Style.Triggers>
+                    <EventTrigger RoutedEvent="Loaded">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.4">
+                                    <DoubleAnimation.EasingFunction><CubicEase EasingMode="EaseOut"/></DoubleAnimation.EasingFunction>
+                                </DoubleAnimation>
+                                <ThicknessAnimation Storyboard.TargetProperty="Margin" From="0,12,0,10" To="0,0,0,10" Duration="0:0:0.4">
+                                    <ThicknessAnimation.EasingFunction><CubicEase EasingMode="EaseOut"/></ThicknessAnimation.EasingFunction>
+                                </ThicknessAnimation>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="BorderBrush" Value="{DynamicResource DevAccentBlueDim}"/>
+                        <Setter Property="Background" Value="{DynamicResource DevBgOverlay}"/>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
+            <Style x:Key="StatValueStyle" TargetType="TextBlock">
+                <Setter Property="FontSize" Value="28"/>
+                <Setter Property="FontWeight" Value="Bold"/>
+                <Setter Property="FontFamily" Value="Segoe UI Variable, Segoe UI Semibold"/>
+                <Setter Property="Foreground" Value="{DynamicResource DevTextPrimary}"/>
+            </Style>
+
+            <Style x:Key="StatLabelStyle" TargetType="TextBlock">
+                <Setter Property="FontSize" Value="11"/>
+                <Setter Property="Foreground" Value="{DynamicResource DevTextMuted}"/>
+                <Setter Property="Margin" Value="0,4,0,0"/>
+            </Style>
+
+            <!-- ═══ METRIC PILL (TopBar) ═══ -->
+
+            <Style x:Key="MetricPillStyle" TargetType="Border">
+                <Setter Property="Background" Value="{DynamicResource DevBgElevated}"/>
+                <Setter Property="BorderBrush" Value="{DynamicResource DevBorderSubtle}"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="CornerRadius" Value="6"/>
+                <Setter Property="Padding" Value="10,4"/>
+                <Setter Property="Margin" Value="4,0"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Background" Value="{DynamicResource DevBgOverlay}"/>
+                        <Setter Property="BorderBrush" Value="{DynamicResource DevBorder}"/>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
+            <Style x:Key="MetricLabelStyle" TargetType="TextBlock">
+                <Setter Property="FontSize" Value="10"/>
+                <Setter Property="Foreground" Value="{DynamicResource DevTextDisabled}"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="Margin" Value="0,0,6,0"/>
+            </Style>
+
+            <Style x:Key="MetricValueStyle" TargetType="TextBlock">
+                <Setter Property="FontSize" Value="12"/>
+                <Setter Property="FontWeight" Value="SemiBold"/>
+                <Setter Property="FontFamily" Value="Segoe UI Variable, Segoe UI Semibold"/>
+                <Setter Property="Foreground" Value="{DynamicResource DevTextPrimary}"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+            </Style>
+
+            <!-- ═══ BADGES ═══ -->
+
+            <Style x:Key="BadgeStyle" TargetType="Border">
+                <Setter Property="CornerRadius" Value="4"/>
+                <Setter Property="Padding" Value="8,2"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="Margin" Value="4,0"/>
+            </Style>
+
+            <Style x:Key="BadgeTextStyle" TargetType="TextBlock">
+                <Setter Property="FontSize" Value="10"/>
+                <Setter Property="FontWeight" Value="Bold"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+            </Style>
+
+            <!-- ═══ OUTPUT PANEL ═══ -->
+
+            <Style x:Key="OutputPanelStyle" TargetType="Border">
+                <Setter Property="Background" Value="{DynamicResource DevBgPrimary}"/>
+                <Setter Property="BorderBrush" Value="{DynamicResource DevBorder}"/>
+                <Setter Property="BorderThickness" Value="0,1,0,0"/>
+            </Style>
+
+            <Style x:Key="OutputTextStyle" TargetType="TextBlock">
+                <Setter Property="FontFamily" Value="Cascadia Code, Consolas, monospace"/>
+                <Setter Property="FontSize" Value="12"/>
+                <Setter Property="Foreground" Value="{DynamicResource DevTextMuted}"/>
+            </Style>
+
+            <!-- ═══ STATUS BAR ═══ -->
+
+            <Style x:Key="StatusBarStyle" TargetType="Border">
+                <Setter Property="Background" Value="{DynamicResource DevBgSurface}"/>
+                <Setter Property="BorderBrush" Value="{DynamicResource DevBorder}"/>
+                <Setter Property="BorderThickness" Value="0,1,0,0"/>
+                <Setter Property="Padding" Value="16,5"/>
+            </Style>
+
+            <!-- ═══ DATAGRID ═══ -->
+
+            <Style TargetType="DataGrid">
+                <Setter Property="Background" Value="{DynamicResource DevBgPrimary}"/>
+                <Setter Property="BorderBrush" Value="{DynamicResource DevBorder}"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="RowBackground" Value="Transparent"/>
+                <Setter Property="AlternatingRowBackground" Value="#08ffffff"/>
+                <Setter Property="GridLinesVisibility" Value="Horizontal"/>
+                <Setter Property="HorizontalGridLinesBrush" Value="{DynamicResource DevBorderSubtle}"/>
+                <Setter Property="Foreground" Value="{DynamicResource DevTextPrimary}"/>
+                <Setter Property="FontSize" Value="12"/>
+            </Style>
+
+            <Style TargetType="DataGridColumnHeader">
+                <Setter Property="Background" Value="{DynamicResource DevBgElevated}"/>
+                <Setter Property="Foreground" Value="{DynamicResource DevTextMuted}"/>
+                <Setter Property="Padding" Value="12,8"/>
+                <Setter Property="FontWeight" Value="SemiBold"/>
+                <Setter Property="FontSize" Value="11"/>
+                <Setter Property="BorderBrush" Value="{DynamicResource DevBorder}"/>
+                <Setter Property="BorderThickness" Value="0,0,0,1"/>
+            </Style>
+
+            <Style TargetType="DataGridCell">
+                <Setter Property="Padding" Value="12,6"/>
+                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="Foreground" Value="{DynamicResource DevTextPrimary}"/>
+                <Style.Triggers>
+                    <Trigger Property="IsSelected" Value="True">
+                        <Setter Property="Background" Value="{DynamicResource DevAccentBlueDim}"/>
+                        <Setter Property="Foreground" Value="{DynamicResource DevTextPrimary}"/>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
+            <!-- ═══ LISTBOX / OUTPUT ═══ -->
+
+            <Style x:Key="OutputListStyle" TargetType="ListBox">
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="FontFamily" Value="Cascadia Code, Consolas, monospace"/>
+                <Setter Property="FontSize" Value="12"/>
+                <Setter Property="Foreground" Value="{DynamicResource DevTextMuted}"/>
+            </Style>
+
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
