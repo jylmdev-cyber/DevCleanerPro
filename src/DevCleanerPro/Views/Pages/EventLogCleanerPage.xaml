@@ -1,0 +1,31 @@
+<Page x:Class="DevCleanerPro.Views.Pages.EventLogCleanerPage" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml" Title="Event Logs">
+    <Grid Margin="36,24"><Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+        <StackPanel Grid.Row="0"><TextBlock Text="Event Log Cleaner" Style="{StaticResource PageTitleStyle}"/><TextBlock Text="Limpia logs de Application, System, Security y Setup" Style="{StaticResource PageSubtitleStyle}"/></StackPanel>
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,0,0,12"><ui:Button Content="Analizar" Icon="{ui:SymbolIcon Search24}" Appearance="Primary" Click="BtnAnalyze_Click" Margin="0,0,8,0"/><ui:Button x:Name="BtnClean" Content="Limpiar seleccionados" Icon="{ui:SymbolIcon Delete24}" Appearance="Caution" Click="BtnClean_Click" IsEnabled="False" Margin="0,0,8,0"/><ui:Button x:Name="BtnCleanSecurity" Content="Limpiar Security (requiere confirmación)" Icon="{ui:SymbolIcon Shield24}" Appearance="Danger" Click="BtnCleanSecurity_Click" IsEnabled="False"/></StackPanel>
+        <Grid Grid.Row="2">
+            <Border x:Name="PanelEmptyState" Style="{StaticResource StatCardStyle}" VerticalAlignment="Center" HorizontalAlignment="Center" Padding="48,32">
+                <StackPanel HorizontalAlignment="Center">
+                    <ui:SymbolIcon Symbol="TextBulletListSquare24" FontSize="48" Margin="0,0,0,16" HorizontalAlignment="Center" Foreground="{DynamicResource DevAccentBlue}"/>
+                    <TextBlock Text="Analizador de Eventos" FontSize="20" FontWeight="SemiBold" HorizontalAlignment="Center"/>
+                    <TextBlock Text="Pulse Analizar para obtener el tamaño de los logs" Opacity="0.6" HorizontalAlignment="Center" Margin="0,8,0,0"/>
+                </StackPanel>
+            </Border>
+            <DataGrid x:Name="Grid" Visibility="Collapsed" AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False" HeadersVisibility="Column">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Log" Binding="{Binding Name}" Width="150"/>
+                    <DataGridTextColumn Header="Eventos" Binding="{Binding EntryCount}" Width="100"/>
+                    <DataGridTextColumn Header="Tamaño (KB)" Binding="{Binding SizeKb, StringFormat=N0}" Width="120">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="FontWeight" Value="SemiBold"/>
+                                <Setter Property="Padding" Value="12,6"/>
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    <DataGridCheckBoxColumn Header="Accesible" Binding="{Binding Accessible}" Width="100"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+        <Grid Grid.Row="3" Margin="0,8,0,0"><Grid.ColumnDefinitions><ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions><ui:ProgressRing x:Name="Ring" IsIndeterminate="True" Width="18" Height="18" Visibility="Collapsed" Margin="0,0,8,0"/><TextBlock x:Name="TxtStatus" Grid.Column="1" Foreground="{DynamicResource DevTextMuted}" FontSize="12" VerticalAlignment="Center"/></Grid>
+    </Grid>
+</Page>
