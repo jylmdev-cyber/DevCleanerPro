@@ -1,0 +1,74 @@
+<Page x:Class="DevCleanerPro.Views.Pages.DockerCleanupPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+      Title="Docker">
+    <Grid Margin="36,24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0">
+            <TextBlock Text="Docker Cleanup" Style="{StaticResource PageTitleStyle}"/>
+            <TextBlock Text="Gestiona el espacio usado por Docker: imágenes, contenedores, volúmenes y build cache" Style="{StaticResource PageSubtitleStyle}"/>
+        </StackPanel>
+
+        <!-- Content -->
+        <Grid Grid.Row="1">
+            <!-- Docker not installed message -->
+            <Border x:Name="PanelNotInstalled" Visibility="Collapsed" Style="{StaticResource StatCardStyle}" VerticalAlignment="Center" HorizontalAlignment="Center" Padding="48,32">
+                <StackPanel HorizontalAlignment="Center">
+                    <ui:SymbolIcon Symbol="CloudDismiss24" FontSize="48" Margin="0,0,0,16" HorizontalAlignment="Center"/>
+                    <TextBlock Text="Docker no está instalado" FontSize="20" FontWeight="SemiBold" HorizontalAlignment="Center"/>
+                    <TextBlock Text="Instale Docker Desktop para usar esta funcionalidad" Opacity="0.6" HorizontalAlignment="Center" Margin="0,8,0,0"/>
+                </StackPanel>
+            </Border>
+
+            <!-- Docker info -->
+            <StackPanel x:Name="PanelDockerInfo" Visibility="Collapsed">
+                <UniformGrid Columns="4" Margin="0,0,0,16">
+                    <Border Style="{StaticResource StatCardStyle}">
+                        <StackPanel HorizontalAlignment="Center">
+                            <ui:Button Content="Actualizar" Icon="{ui:SymbolIcon ArrowSync24}" Appearance="Primary" Click="BtnRefresh_Click"/>
+                        </StackPanel>
+                    </Border>
+                    <Border Style="{StaticResource StatCardStyle}">
+                        <StackPanel HorizontalAlignment="Center">
+                            <ui:Button Content="Purgar imágenes" Icon="{ui:SymbolIcon Image24}" Appearance="Caution" Click="BtnPruneImages_Click"/>
+                        </StackPanel>
+                    </Border>
+                    <Border Style="{StaticResource StatCardStyle}">
+                        <StackPanel HorizontalAlignment="Center">
+                            <ui:Button Content="Purgar build cache" Icon="{ui:SymbolIcon Building24}" Appearance="Caution" Click="BtnPruneBuildCache_Click"/>
+                        </StackPanel>
+                    </Border>
+                    <Border Style="{StaticResource StatCardStyle}">
+                        <StackPanel HorizontalAlignment="Center">
+                            <ui:Button Content="Purgar TODO" Icon="{ui:SymbolIcon Delete24}" Appearance="Danger" Click="BtnPruneAll_Click"/>
+                        </StackPanel>
+                    </Border>
+                </UniformGrid>
+
+                <DataGrid x:Name="DockerGrid" AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False" HeadersVisibility="Column" GridLinesVisibility="Horizontal">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Tipo" Binding="{Binding Type}" Width="200"/>
+                        <DataGridTextColumn Header="Cantidad" Binding="{Binding Count}" Width="100"/>
+                        <DataGridTextColumn Header="Tamaño" Binding="{Binding Size}" Width="150"/>
+                        <DataGridTextColumn Header="Recuperable" Binding="{Binding Reclaimable}" Width="*"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </StackPanel>
+        </Grid>
+
+        <Grid Grid.Row="2" Margin="0,8,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <ui:ProgressRing x:Name="LoadingRing" IsIndeterminate="True" Width="18" Height="18" Visibility="Collapsed" Margin="0,0,8,0"/>
+            <TextBlock x:Name="TxtStatus" Grid.Column="1" Text="Verificando Docker..." VerticalAlignment="Center" Foreground="{DynamicResource DevTextMuted}" FontSize="12"/>
+        </Grid>
+    </Grid>
+</Page>
