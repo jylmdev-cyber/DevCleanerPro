@@ -1,0 +1,19 @@
+<Page x:Class="DevCleanerPro.Views.Pages.QuickCleanPage" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml" Title="Limpieza Rápida">
+    <Grid Margin="36,24"><Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+        <StackPanel Grid.Row="0"><TextBlock Text="Limpieza Rápida" Style="{StaticResource PageTitleStyle}"/><TextBlock Text="One-click: Temp → Memoria → Cachés → DNS → Event Logs" Style="{StaticResource PageSubtitleStyle}"/></StackPanel>
+        <Border Grid.Row="1" Style="{StaticResource StatCardStyle}"><StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+            <ui:SymbolIcon Symbol="Broom24" FontSize="64" Margin="0,0,0,24" HorizontalAlignment="Center"/>
+            <TextBlock x:Name="TxtStep" Text="Listo para limpiar" FontSize="18" HorizontalAlignment="Center" Margin="0,0,0,8"/>
+            <ProgressBar x:Name="ProgressBar" Width="400" Height="8" Minimum="0" Maximum="100" Value="0" Margin="0,0,0,16"/>
+            <UniformGrid Columns="2" Width="400" Margin="0,0,0,24">
+                <Border Style="{StaticResource StatCardStyle}" Margin="0,0,4,0"><StackPanel HorizontalAlignment="Center"><TextBlock Text="Paso actual" Style="{StaticResource StatLabelStyle}"/><TextBlock x:Name="TxtCurrent" Text="—" Style="{StaticResource StatValueStyle}" FontSize="14"/></StackPanel></Border>
+                <Border Style="{StaticResource StatCardStyle}" Margin="4,0,0,0"><StackPanel HorizontalAlignment="Center"><TextBlock Text="Total liberado" Style="{StaticResource StatLabelStyle}"/><TextBlock x:Name="TxtFreed" Text="—" Style="{StaticResource StatValueStyle}" FontSize="14" Foreground="{DynamicResource DevAccentGreen}"/></StackPanel></Border>
+            </UniformGrid>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <ui:Button x:Name="BtnStart" Content="Iniciar Limpieza" Icon="{ui:SymbolIcon Play24}" Appearance="Primary" Click="BtnStart_Click" FontSize="16" Padding="32,12" Margin="0,0,12,0"/>
+                <ui:Button x:Name="BtnCancel" Content="Cancelar" Icon="{ui:SymbolIcon Dismiss24}" Appearance="Danger" Click="BtnCancel_Click" FontSize="16" Padding="32,12" IsEnabled="False"/>
+            </StackPanel>
+        </StackPanel></Border>
+        <TextBlock x:Name="TxtStatus" Grid.Row="2" Foreground="{DynamicResource DevTextMuted}" FontSize="12" Margin="0,8,0,0"/>
+    </Grid>
+</Page>
