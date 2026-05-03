@@ -1,0 +1,10 @@
+<Page x:Class="DevCleanerPro.Views.Pages.VsCleanerPage" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml" Title="VS Cleaner">
+    <Grid Margin="36,24"><Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+        <StackPanel Grid.Row="0"><TextBlock Text="VS Cleaner" Style="{StaticResource PageTitleStyle}"/><TextBlock Text="Limpia cachés de Visual Studio y VS Code" Style="{StaticResource PageSubtitleStyle}"/></StackPanel>
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,0,0,12"><ui:Button Content="Escanear" Icon="{ui:SymbolIcon Search24}" Appearance="Primary" Click="BtnScan_Click" Margin="0,0,8,0"/><ui:Button x:Name="BtnClean" Content="Limpiar todo" Icon="{ui:SymbolIcon Delete24}" Appearance="Caution" Click="BtnClean_Click" IsEnabled="False"/><TextBlock x:Name="TxtTotal" VerticalAlignment="Center" Margin="16,0,0,0" FontWeight="SemiBold"/></StackPanel>
+        <DataGrid x:Name="Grid" Grid.Row="2" AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False" HeadersVisibility="Column"><DataGrid.Columns>
+            <DataGridTextColumn Header="Nombre" Binding="{Binding Name}" Width="*"/><DataGridTextColumn Header="Ruta" Binding="{Binding Path}" Width="300"/><DataGridTextColumn Header="Tamaño" Binding="{Binding Size, StringFormat=N0}" Width="120"/>
+        </DataGrid.Columns></DataGrid>
+        <Grid Grid.Row="3" Margin="0,8,0,0"><Grid.ColumnDefinitions><ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions><ui:ProgressRing x:Name="Ring" IsIndeterminate="True" Width="18" Height="18" Visibility="Collapsed" Margin="0,0,8,0"/><TextBlock x:Name="TxtStatus" Grid.Column="1" Foreground="{DynamicResource DevTextMuted}" FontSize="12" VerticalAlignment="Center"/></Grid>
+    </Grid>
+</Page>
