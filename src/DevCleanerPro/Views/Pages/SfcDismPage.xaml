@@ -1,0 +1,16 @@
+<Page x:Class="DevCleanerPro.Views.Pages.SfcDismPage" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml" Title="SFC/DISM">
+    <Grid Margin="36,24"><Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+        <StackPanel Grid.Row="0"><TextBlock Text="SFC / DISM Repair" Style="{StaticResource PageTitleStyle}"/><TextBlock Text="Reparación del sistema con System File Checker y DISM" Style="{StaticResource PageSubtitleStyle}"/></StackPanel>
+        <Grid Grid.Row="1" Margin="0,0,0,16">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="16"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <ui:Button x:Name="BtnSfc" Grid.Column="0" Content="Ejecutar SFC" Icon="{ui:SymbolIcon Wrench24}" Appearance="Primary" Click="BtnSfc_Click" HorizontalAlignment="Stretch" Padding="16,12"/>
+            <ui:Button x:Name="BtnDism" Grid.Column="2" Content="Ejecutar DISM Repair" Icon="{ui:SymbolIcon BuildingFactory24}" Appearance="Caution" Click="BtnDism_Click" HorizontalAlignment="Stretch" Padding="16,12"/>
+        </Grid>
+        <Border Grid.Row="2" Style="{StaticResource StatCardStyle}"><ListBox x:Name="OutputList" FontFamily="Consolas" FontSize="12" Background="Transparent" BorderThickness="0"/></Border>
+        <Grid Grid.Row="3" Margin="0,8,0,0"><Grid.ColumnDefinitions><ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions><ui:ProgressRing x:Name="Ring" IsIndeterminate="True" Width="18" Height="18" Visibility="Collapsed" Margin="0,0,8,0"/><TextBlock x:Name="TxtStatus" Grid.Column="1" Foreground="{DynamicResource DevTextMuted}" FontSize="12" VerticalAlignment="Center"/></Grid>
+    </Grid>
+</Page>
