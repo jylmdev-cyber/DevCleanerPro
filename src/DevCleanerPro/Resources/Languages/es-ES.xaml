@@ -1,0 +1,56 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+    
+    <!-- ═══ MAIN WINDOW ═══ -->
+    <system:String x:Key="Str_AppTitle">DevCleaner Pro</system:String>
+    <system:String x:Key="Str_Nav_Dashboard">Panel de Control</system:String>
+    <system:String x:Key="Str_Nav_Section_Analysis">ANÁLISIS</system:String>
+    <system:String x:Key="Str_Nav_Projects">Proyectos</system:String>
+    <system:String x:Key="Str_Nav_DiskAnalyzer">Analizador de Disco</system:String>
+    <system:String x:Key="Str_Nav_SystemInfo">Información del Sistema</system:String>
+    <system:String x:Key="Str_Nav_Section_Cleanup">LIMPIEZA</system:String>
+    <system:String x:Key="Str_Nav_Docker">Limpieza Docker</system:String>
+    <system:String x:Key="Str_Nav_AiAgents">Cachés de IA</system:String>
+    <system:String x:Key="Str_Nav_VisualStudio">Visual Studio</system:String>
+    <system:String x:Key="Str_Nav_TempFiles">Archivos Temporales</system:String>
+    <system:String x:Key="Str_Nav_EventLogs">Logs de Eventos</system:String>
+    <system:String x:Key="Str_Nav_Registry">Registro</system:String>
+    <system:String x:Key="Str_Nav_Section_Optimization">OPTIMIZACIÓN</system:String>
+    <system:String x:Key="Str_Nav_Memory">Memoria</system:String>
+    <system:String x:Key="Str_Nav_SfcDism">SFC / DISM Repair</system:String>
+    <system:String x:Key="Str_Nav_Startup">Arranque del Sistema</system:String>
+    <system:String x:Key="Str_Nav_Processes">Procesos</system:String>
+    <system:String x:Key="Str_Nav_Settings">Configuración</system:String>
+    <system:String x:Key="Str_Footer_Uptime">Uptime</system:String>
+    <system:String x:Key="Str_Footer_Cleaned">Liberado Hoy</system:String>
+
+    <!-- ═══ SETTINGS PAGE ═══ -->
+    <system:String x:Key="Str_Settings_Title">Configuración</system:String>
+    <system:String x:Key="Str_Settings_Subtitle">Personaliza el comportamiento de DevCleaner Pro</system:String>
+    <system:String x:Key="Str_Settings_Appearance">Apariencia</system:String>
+    <system:String x:Key="Str_Settings_Theme">Tema</system:String>
+    <system:String x:Key="Str_Settings_Language">Idioma</system:String>
+    <system:String x:Key="Str_Settings_Behavior">Comportamiento</system:String>
+    <system:String x:Key="Str_Settings_ConfirmDelete">Confirmar antes de eliminar</system:String>
+    <system:String x:Key="Str_Settings_UseRecycleBin">Enviar a Papelera en lugar de eliminar permanentemente</system:String>
+    <system:String x:Key="Str_Settings_SafeMode">Modo Seguro activado (excluir archivos en uso)</system:String>
+    <system:String x:Key="Str_Settings_DefaultPath">Carpeta de proyectos predeterminada</system:String>
+    <system:String x:Key="Str_Settings_LargeFiles">Tamaño mínimo para archivos grandes</system:String>
+    <system:String x:Key="Str_Settings_Exclusions">Rutas excluidas de limpieza</system:String>
+    <system:String x:Key="Str_Settings_ExclusionsSubtitle">Agrega rutas o patrones que nunca serán limpiados</system:String>
+    <system:String x:Key="Str_Settings_Add">Agregar</system:String>
+    <system:String x:Key="Str_Settings_Remove">Quitar</system:String>
+    <system:String x:Key="Str_Settings_Logs">Logs y Retención</system:String>
+    <system:String x:Key="Str_Settings_LogDays">Retención de logs de auditoría</system:String>
+    <system:String x:Key="Str_Settings_SystemTray">System Tray y Arranque</system:String>
+    <system:String x:Key="Str_Settings_MinimizeTray">Minimizar a la bandeja del sistema en lugar de cerrar</system:String>
+    <system:String x:Key="Str_Settings_StartWindows">Iniciar con Windows (Minimizado)</system:String>
+    <system:String x:Key="Str_Settings_Shortcuts">Atajos de teclado</system:String>
+    <system:String x:Key="Str_Settings_Version">Versión y Respaldo</system:String>
+    <system:String x:Key="Str_Settings_CheckUpdates">Buscar actualizaciones</system:String>
+    <system:String x:Key="Str_Settings_Export">Exportar Settings</system:String>
+    <system:String x:Key="Str_Settings_Import">Importar Settings</system:String>
+    <system:String x:Key="Str_Settings_Save">Guardar Configuración</system:String>
+
+</ResourceDictionary>

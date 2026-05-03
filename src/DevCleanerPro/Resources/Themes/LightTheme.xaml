@@ -1,0 +1,50 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- Background Layers -->
+    <SolidColorBrush x:Key="DevBgPrimary"   Color="#eef2f6"/>   <!-- Fondo global (un poco más gris para no brillar tanto) -->
+    <SolidColorBrush x:Key="DevBgSurface"   Color="#f8fafc"/>   <!-- Superficies principales (blanco muy suave en lugar de puro) -->
+    <SolidColorBrush x:Key="DevBgLayer2"    Color="#e2e8f0"/>   <!-- Second layer (e.g. footers) -->
+    <SolidColorBrush x:Key="DevBgElevated"  Color="#f8fafc"/>   <!-- Paneles / Popups -->
+    <SolidColorBrush x:Key="DevBgOverlay"   Color="#cbd5e1"/>   <!-- Hovers -->
+    
+    <!-- Borders -->
+    <SolidColorBrush x:Key="DevBorder"       Color="#d0d7de"/>
+    <SolidColorBrush x:Key="DevBorderSubtle" Color="#e1e4e8"/>
+    <SolidColorBrush x:Key="DevBorderColor"  Color="#d0d7de"/> <!-- Compatible key -->
+
+    <!-- Text -->
+    <SolidColorBrush x:Key="DevTextPrimary"  Color="#1f2328"/>
+    <SolidColorBrush x:Key="DevTextMuted"    Color="#656d76"/>
+    <SolidColorBrush x:Key="DevTextDisabled" Color="#8c959f"/>
+
+    <!-- Accents (High Contrast) -->
+    <SolidColorBrush x:Key="DevAccentBlue"   Color="#0969da"/>
+    <SolidColorBrush x:Key="DevAccentGreen"  Color="#1a7f37"/>
+    <SolidColorBrush x:Key="DevAccentYellow" Color="#9e6a03"/>
+    <SolidColorBrush x:Key="DevAccentRed"    Color="#cf222e"/>
+    <SolidColorBrush x:Key="DevAccentPurple" Color="#8250df"/>
+    <SolidColorBrush x:Key="DevAccentOrange" Color="#b05c10"/>
+    <SolidColorBrush x:Key="DevAccentCyan"   Color="#057a82"/>
+
+    <!-- Accents Dim (Transparencia 18 en hex = ~10%) -->
+    <SolidColorBrush x:Key="DevAccentBlueDim"   Color="#180969da"/>
+    <SolidColorBrush x:Key="DevAccentGreenDim"  Color="#181a7f37"/>
+    <SolidColorBrush x:Key="DevAccentYellowDim" Color="#189e6a03"/>
+    <SolidColorBrush x:Key="DevAccentRedDim"    Color="#18cf222e"/>
+    <SolidColorBrush x:Key="DevAccentPurpleDim" Color="#188250df"/>
+    <SolidColorBrush x:Key="DevAccentOrangeDim" Color="#18b05c10"/>
+    <SolidColorBrush x:Key="DevAccentCyanDim"   Color="#18057a82"/>
+
+    <!-- Gradients -->
+    <LinearGradientBrush x:Key="DevGradientBlue" StartPoint="0,0" EndPoint="1,1">
+        <GradientStop Color="#0969da" Offset="0"/><GradientStop Color="#8250df" Offset="1"/>
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="DevGradientGreen" StartPoint="0,0" EndPoint="1,0">
+        <GradientStop Color="#1a7f37" Offset="0"/><GradientStop Color="#057a82" Offset="1"/>
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="DevGradientSurface" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Color="#f8fafc" Offset="0"/><GradientStop Color="#f1f5f9" Offset="1"/>
+    </LinearGradientBrush>
+
+</ResourceDictionary>
