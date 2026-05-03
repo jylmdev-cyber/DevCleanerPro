@@ -1,0 +1,171 @@
+<Page x:Class="DevCleanerPro.Views.Pages.SettingsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+      Title="Configuración">
+    <ScrollViewer Margin="36,24" VerticalScrollBarVisibility="Auto">
+        <StackPanel MaxWidth="720">
+            <TextBlock Text="{DynamicResource Str_Settings_Title}" Style="{StaticResource PageTitleStyle}"/>
+            <TextBlock Text="{DynamicResource Str_Settings_Subtitle}" Style="{StaticResource PageSubtitleStyle}"/>
+
+            <!-- ═══ APARIENCIA ═══ -->
+            <TextBlock Text="{DynamicResource Str_Settings_Appearance}" Style="{StaticResource SectionHeaderStyle}"/>
+            <Border Style="{StaticResource StatCardStyle}" Margin="0,0,0,16">
+                <Grid>
+                    <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                    <StackPanel>
+                        <TextBlock Text="{DynamicResource Str_Settings_Theme}" FontWeight="SemiBold" Margin="0,0,0,8"/>
+                        <ComboBox x:Name="CmbTheme" Width="200" HorizontalAlignment="Left" SelectionChanged="CmbTheme_SelectionChanged">
+                            <ComboBoxItem Content="🌙 Oscuro"/>
+                            <ComboBoxItem Content="☀️ Claro"/>
+                            <ComboBoxItem Content="🖥️ Sistema"/>
+                        </ComboBox>
+                        <TextBlock Text="{DynamicResource Str_Settings_Language}" FontWeight="SemiBold" Margin="0,16,0,8"/>
+                        <ComboBox x:Name="CmbLanguage" Width="200" HorizontalAlignment="Left">
+                            <ComboBoxItem Content="🇪🇸 Español (es-ES)"/>
+                            <ComboBoxItem Content="🇺🇸 English (en-US)"/>
+                        </ComboBox>
+                    </StackPanel>
+                    <Border Grid.Column="1" Width="40" Height="40" CornerRadius="20" Background="{DynamicResource DevAccentBlueDim}" VerticalAlignment="Top">
+                        <ui:SymbolIcon Symbol="PaintBrush24" Foreground="{DynamicResource DevAccentBlue}" FontSize="20"/>
+                    </Border>
+                </Grid>
+            </Border>
+
+            <!-- ═══ COMPORTAMIENTO ═══ -->
+            <TextBlock Text="{DynamicResource Str_Settings_Behavior}" Style="{StaticResource SectionHeaderStyle}"/>
+            <Border Style="{StaticResource StatCardStyle}" Margin="0,0,0,16">
+                <Grid>
+                    <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                    <StackPanel>
+                        <CheckBox x:Name="ChkConfirmDelete" Content="{DynamicResource Str_Settings_ConfirmDelete}" IsChecked="True" Margin="0,0,0,10" ToolTip="Muestra diálogo de confirmación antes de ejecutar limpieza"/>
+                        <CheckBox x:Name="ChkRecycleBin" Content="{DynamicResource Str_Settings_UseRecycleBin}" IsChecked="False" Margin="0,0,0,10" ToolTip="Más seguro pero usa más disco temporalmente"/>
+                        <CheckBox x:Name="ChkSafeMode" Content="{DynamicResource Str_Settings_SafeMode}" IsChecked="True" Margin="0,0,0,10" ToolTip="No elimina archivos que están siendo usados por procesos"/>
+                        <Grid Margin="0,8,0,0">
+                            <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                            <StackPanel>
+                                <TextBlock Text="{DynamicResource Str_Settings_DefaultPath}" FontWeight="SemiBold" Margin="0,0,0,6"/>
+                                <ui:TextBox x:Name="TxtDefaultPath" PlaceholderText="Ej: D:\projects" ToolTip="Ruta por defecto al escanear proyectos"/>
+                            </StackPanel>
+                            <ui:Button Grid.Column="1" Content="📂" Click="BtnBrowseDefault_Click" VerticalAlignment="Bottom" Margin="8,0,0,0" ToolTip="Seleccionar carpeta"/>
+                        </Grid>
+                        <StackPanel Margin="0,12,0,0">
+                            <TextBlock Text="{DynamicResource Str_Settings_LargeFiles}" FontWeight="SemiBold" Margin="0,0,0,6"/>
+                            <StackPanel Orientation="Horizontal">
+                                <ui:TextBox x:Name="TxtThreshold" Width="80" Text="100" ToolTip="Archivos por encima de este tamaño aparecen en el analizador de disco"/>
+                                <TextBlock Text="MB" VerticalAlignment="Center" Margin="8,0,0,0" Foreground="{DynamicResource DevTextMuted}"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
+                    <Border Grid.Column="1" Width="40" Height="40" CornerRadius="20" Background="{DynamicResource DevAccentOrangeDim}" VerticalAlignment="Top">
+                        <ui:SymbolIcon Symbol="Wrench24" Foreground="{DynamicResource DevAccentOrange}" FontSize="20"/>
+                    </Border>
+                </Grid>
+            </Border>
+
+            <!-- ═══ EXCLUSIONES ═══ -->
+            <TextBlock Text="{DynamicResource Str_Settings_Exclusions}" Style="{StaticResource SectionHeaderStyle}"/>
+            <Border Style="{StaticResource StatCardStyle}" Margin="0,0,0,16">
+                <Grid>
+                    <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                    <StackPanel>
+                        <TextBlock Text="{DynamicResource Str_Settings_ExclusionsSubtitle}" Foreground="{DynamicResource DevTextMuted}" FontSize="12" Margin="0,0,0,8"/>
+                        <ListBox x:Name="LstExclusions" Height="100" Background="Transparent" BorderThickness="0" FontFamily="Cascadia Code, Consolas" FontSize="12"/>
+                        <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                            <ui:TextBox x:Name="TxtNewExclusion" Width="400" PlaceholderText="Ej: C:\important\data o *.bak" Margin="0,0,8,0"/>
+                            <ui:Button Content="{DynamicResource Str_Settings_Add}" Icon="{ui:SymbolIcon Add24}" Click="BtnAddExclusion_Click" Margin="0,0,4,0"/>
+                            <ui:Button Content="{DynamicResource Str_Settings_Remove}" Icon="{ui:SymbolIcon Delete24}" Appearance="Danger" Click="BtnRemoveExclusion_Click"/>
+                        </StackPanel>
+                    </StackPanel>
+                    <Border Grid.Column="1" Width="40" Height="40" CornerRadius="20" Background="{DynamicResource DevAccentGreenDim}" VerticalAlignment="Top">
+                        <ui:SymbolIcon Symbol="ShieldCheckmark24" Foreground="{DynamicResource DevAccentGreen}" FontSize="20"/>
+                    </Border>
+                </Grid>
+            </Border>
+
+            <!-- ═══ LOGS ═══ -->
+            <TextBlock Text="{DynamicResource Str_Settings_Logs}" Style="{StaticResource SectionHeaderStyle}"/>
+            <Border Style="{StaticResource StatCardStyle}" Margin="0,0,0,16">
+                <Grid>
+                    <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                    <StackPanel>
+                        <TextBlock Text="{DynamicResource Str_Settings_LogDays}" FontWeight="SemiBold" Margin="0,0,0,6"/>
+                        <StackPanel Orientation="Horizontal">
+                            <ui:TextBox x:Name="TxtLogDays" Width="60" Text="30"/>
+                            <TextBlock Text="días" VerticalAlignment="Center" Margin="8,0,0,0" Foreground="{DynamicResource DevTextMuted}"/>
+                        </StackPanel>
+                    </StackPanel>
+                    <Border Grid.Column="1" Width="40" Height="40" CornerRadius="20" Background="{DynamicResource DevAccentPurpleDim}" VerticalAlignment="Top">
+                        <ui:SymbolIcon Symbol="TextBulletListSquare24" Foreground="{DynamicResource DevAccentPurple}" FontSize="20"/>
+                    </Border>
+                </Grid>
+            </Border>
+
+            <!-- ═══ SYSTEM TRAY ═══ -->
+            <TextBlock Text="{DynamicResource Str_Settings_SystemTray}" Style="{StaticResource SectionHeaderStyle}"/>
+            <Border Style="{StaticResource StatCardStyle}" Margin="0,0,0,16">
+                <Grid>
+                    <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                    <StackPanel>
+                        <CheckBox x:Name="ChkTray" Content="{DynamicResource Str_Settings_MinimizeTray}" Margin="0,0,0,10" ToolTip="La app se mantiene en segundo plano"/>
+                        <CheckBox x:Name="ChkStartup" Content="{DynamicResource Str_Settings_StartWindows}" Margin="0,0,0,0" ToolTip="Agrega entrada en el registro para iniciar automáticamente" Click="ChkStartup_Click"/>
+                    </StackPanel>
+                    <Border Grid.Column="1" Width="40" Height="40" CornerRadius="20" Background="{DynamicResource DevAccentBlueDim}" VerticalAlignment="Top">
+                        <ui:SymbolIcon Symbol="Desktop24" Foreground="{DynamicResource DevAccentBlue}" FontSize="20"/>
+                    </Border>
+                </Grid>
+            </Border>
+
+            <!-- ═══ ATAJOS DE TECLADO ═══ -->
+            <TextBlock Text="{DynamicResource Str_Settings_Shortcuts}" Style="{StaticResource SectionHeaderStyle}"/>
+            <Border Style="{StaticResource StatCardStyle}" Margin="0,0,0,16">
+                <Grid>
+                    <Grid.ColumnDefinitions><ColumnDefinition Width="200"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/><RowDefinition/><RowDefinition/><RowDefinition/><RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="F5" FontFamily="Cascadia Code, Consolas" FontWeight="Bold" Margin="0,3"/>
+                    <TextBlock Grid.Row="0" Grid.Column="1" Text="Refrescar módulo actual" Foreground="{DynamicResource DevTextMuted}" Margin="0,3"/>
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Ctrl+Shift+C" FontFamily="Cascadia Code, Consolas" FontWeight="Bold" Margin="0,3"/>
+                    <TextBlock Grid.Row="1" Grid.Column="1" Text="Quick Clean" Foreground="{DynamicResource DevTextMuted}" Margin="0,3"/>
+                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Ctrl+L" FontFamily="Cascadia Code, Consolas" FontWeight="Bold" Margin="0,3"/>
+                    <TextBlock Grid.Row="2" Grid.Column="1" Text="Limpiar output panel" Foreground="{DynamicResource DevTextMuted}" Margin="0,3"/>
+                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Ctrl+," FontFamily="Cascadia Code, Consolas" FontWeight="Bold" Margin="0,3"/>
+                    <TextBlock Grid.Row="3" Grid.Column="1" Text="Abrir Configuración" Foreground="{DynamicResource DevTextMuted}" Margin="0,3"/>
+                    <TextBlock Grid.Row="4" Grid.Column="0" Text="Escape" FontFamily="Cascadia Code, Consolas" FontWeight="Bold" Margin="0,3"/>
+                    <TextBlock Grid.Row="4" Grid.Column="1" Text="Cancelar operación en curso" Foreground="{DynamicResource DevTextMuted}" Margin="0,3"/>
+                </Grid>
+            </Border>
+
+            <!-- ═══ ABOUT & UPDATES ═══ -->
+            <TextBlock Text="{DynamicResource Str_Settings_Version}" Style="{StaticResource SectionHeaderStyle}"/>
+            <Border Style="{StaticResource StatCardStyle}" Margin="0,0,0,32">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel>
+                        <TextBlock Text="DevCleaner Pro v2.0" FontWeight="SemiBold"/>
+                        <TextBlock Text="© 2026 DevTools. Todos los derechos reservados." Foreground="{DynamicResource DevTextMuted}" Margin="0,4,0,0"/>
+                        <StackPanel Orientation="Horizontal" Margin="0,16,0,0">
+                            <ui:Button Content="{DynamicResource Str_Settings_CheckUpdates}" Icon="{ui:SymbolIcon ArrowSync24}" Click="BtnCheckUpdate_Click" Margin="0,0,8,0"/>
+                            <ui:Button Content="{DynamicResource Str_Settings_Export}" Icon="{ui:SymbolIcon ArrowDownload24}" Click="BtnExportSettings_Click" Margin="0,0,8,0"/>
+                            <ui:Button Content="{DynamicResource Str_Settings_Import}" Icon="{ui:SymbolIcon ArrowUpload24}" Click="BtnImportSettings_Click"/>
+                        </StackPanel>
+                    </StackPanel>
+                    <StackPanel Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Right">
+                        <TextBlock Text="21" FontSize="48" FontWeight="Bold" Foreground="{DynamicResource DevAccentBlue}" HorizontalAlignment="Center"/>
+                        <TextBlock Text="módulos" FontSize="12" Foreground="{DynamicResource DevTextMuted}" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <!-- Guardar -->
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,24">
+                <ui:Button x:Name="BtnSave" Content="💾 Guardar configuración" Appearance="Primary" Click="BtnSave_Click" Padding="24,8" FontSize="14" ToolTip="Guardar todos los cambios (Ctrl+S)"/>
+                <TextBlock x:Name="TxtStatus" Text="" Foreground="{DynamicResource DevAccentGreen}" FontSize="12" VerticalAlignment="Center" Margin="16,0,0,0"/>
+            </StackPanel>
+        </StackPanel>
+    </ScrollViewer>
+</Page>
